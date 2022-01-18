@@ -19,7 +19,7 @@ while getopts ":c:t:u:" opt; do # check string!@!
       U=${OPTARG}
       ECHO "USERNAME: $U"
       ;;
-    \? ) echo "Options are: [-c (num)] [-t (num)] [-u (num)]"
+    \? ) echo "Input is: [-c (num)] [-t (num)] [-u (num)] [Program Name]"
         exit
       ;;
   esac
@@ -27,9 +27,9 @@ done
 }
 
 checkinput () {
-  if [ $XC = "-c" ] || [ $XC = "-t" ] || [ $XC = "-u" ] || [ $XC = "" ]
+  if [ $XC = "-c" ] || [ $XC = "-t" ] || [ $XC = "-u" ] || [ $XC = "" ] || [[ $XC =~ ^[+-]?[0-9]+$ ]]
   then
-    echo "Input error"
+    echo "Input error, for help input -h"
     exit
   fi
 }
@@ -77,8 +77,7 @@ psping () {
 
 #echops $@
 
-psping 123
-
+psping -h
 
 # X="ABC"
 # Z="22"
