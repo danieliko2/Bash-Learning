@@ -20,6 +20,7 @@ decompress () {
         application/zip)
             echo "unzip    $1" ;;
         application/x-compress)
+            # mv $1 "${1:-2}.Z"
             echo "uncompress    $1" ;;
         text/plain)
             echo "text"    $1 ;;
@@ -50,9 +51,12 @@ decompress_2 () {
         ;;
 
         application/x-compress)
-            [[ $v ]] && echo "Extracting $FILENAME..."
-            COUNT=$(($COUNT + 1))
-            ;;
+        FILENAME2=${FILENAME::-4}Z
+        mv $FILENAME $FILENAME2
+        eval "uncompress -f $FILENAME2"
+        [[ $v ]] && echo "Extracting $FILENAME..."
+        COUNT=$(($COUNT + 1))
+        ;;
 
         *)
             [[ $v ]] && echo "$FILENAME was skipped"
@@ -184,6 +188,10 @@ func8 () {
 # COUNT=0
 main $@
 
+# X="archive.cmpr"
+# X2="${X::-4}z"
+# mv $X $X2
+# uncompress -f $X2
 # [[ 1 = 2 ]] && echo "yes" || echo "no"
 
 # if [[ -f $1 ]]
